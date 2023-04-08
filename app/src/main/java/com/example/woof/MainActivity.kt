@@ -28,13 +28,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.woof.data.Dog
@@ -57,30 +59,44 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 fun WoofApp() {
-    TopAppBar(
+    Scaffold(
+        topBar = {
+        WoofTopBar()
+        }
+    ){
+        Modifier
+            .padding(it)
+        LazyColumn(
+            modifier = Modifier.background(MaterialTheme.colors.background)
+        ) {
+            items(dogs) { it1 ->
+                DogItem(dog = it1)
+            }
+        }
+    }
+}
+
+
+@Composable
+fun WoofTopBar() {
+    Row(
         modifier = Modifier
-            .background(MaterialTheme.colors.secondary)
-            .fillMaxWidth()
-            .width(20.dp)
+            .padding(5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_woof_logo),
             contentDescription = null
         )
         Text(
+            style = MaterialTheme.typography.h3,
+            textAlign = TextAlign.Center,
+//            modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.app_name)
         )
     }
-    LazyColumn(
-        modifier = Modifier.background(MaterialTheme.colors.background)
-    ) {
-        items(dogs) {
-            DogItem(dog = it)
-        }
-    }
 }
-
-
 @Composable
 fun DogItem(dog: Dog) {
     Card(elevation = 10.dp) {
