@@ -81,11 +81,13 @@ fun WoofApp() {
 fun WoofTopBar() {
     Row(
         modifier = Modifier
-            .padding(5.dp),
+            .padding(5.dp) ,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Image(
+            modifier = Modifier
+                .size(25.dp),
             painter = painterResource(id = R.drawable.ic_woof_logo),
             contentDescription = null
         )
